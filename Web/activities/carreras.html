@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar Carreras del API</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Carreras del API</h1>
+    <table id="data-table" border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Perfil Profesional</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos serán insertados aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const apiUrl = 'http://localhost:8000/api/carreras'; // Asegúrate de usar la URL correcta de tu API
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayDataInTable(data);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+
+            function displayDataInTable(data) {
+                const tableBody = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+
+                data.forEach(item => {
+                    let row = tableBody.insertRow();
+                    
+                    let cellNombre = row.insertCell(0);
+                    cellNombre.textContent = item.nombre;
+                    
+                    let cellDescripcion = row.insertCell(1);
+                    cellDescripcion.textContent = item.descripcion;
+                    
+                    let cellPerfilProfesional = row.insertCell(2);
+                    cellPerfilProfesional.textContent = item.perfilProfesional;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

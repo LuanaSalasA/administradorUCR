@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar Planes de Estudio del API</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Planes de Estudio del API</h1>
+    <table id="data-table" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Cantidad de Créditos</th>
+                <th>Fecha de Aprobación</th>
+                <th>Cursos</th>
+                <th>Nombre de la Carrera</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos serán insertados aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const apiUrl = 'http://localhost:8000/api/plan_estudios'; // Asegúrate de usar la URL correcta de tu API
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayDataInTable(data);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+
+            function displayDataInTable(data) {
+                const tableBody = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+
+                data.forEach(item => {
+                    let row = tableBody.insertRow();
+                    
+                    let cellId = row.insertCell(0);
+                    cellId.textContent = item.id;
+                    
+                    let cellDescripcion = row.insertCell(1);
+                    cellDescripcion.textContent = item.descripcion;
+                    
+                    let cellCantidadCreditos = row.insertCell(2);
+                    cellCantidadCreditos.textContent = item.cantidadCreditos;
+                    
+                    let cellFechaAprobacion = row.insertCell(3);
+                    cellFechaAprobacion.textContent = item.fechaAprobacion;
+                    
+                    let cellCursos = row.insertCell(4);
+                    cellCursos.textContent = item.cursos;
+                    
+                    let cellNombreCarrera = row.insertCell(5);
+                    cellNombreCarrera.textContent = item.nombreCarrera;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

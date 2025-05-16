@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar Datos del API</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Cursos del API</h1>
+    <table id="data-table" border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Cantidad de Créditos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos serán insertados aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const apiUrl = 'http://localhost:8000/api/cursos'; // Asegúrate de usar la URL correcta de tu API
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayDataInTable(data);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+
+            function displayDataInTable(data) {
+                const tableBody = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+
+                data.forEach(item => {
+                    let row = tableBody.insertRow();
+                    
+                    let cellName = row.insertCell(0);
+                    cellName.textContent = item.nombre;
+                    
+                    let cellDescription = row.insertCell(1);
+                    cellDescription.textContent = item.descripcion;
+                    
+                    let cellCredits = row.insertCell(2);
+                    cellCredits.textContent = item.cantidadCreditos;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

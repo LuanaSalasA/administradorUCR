@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Principal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <img src="img/Escudo_de_la_Universidad_de_Costa_Rica.svg.png" alt="Escudo UCR">
+
+        <h1>Administración de Datos</h1>
+    </header>
+    <nav>
+        <a href="#" onclick="loadPage('carreras.html')">Carreras</a>
+        <a href="#" onclick="loadPage('usuarios.html')">Usuarios</a>
+        <a href="#" onclick="loadPage('planes.html')">Planes de Estudios</a>
+        <a href="#" onclick="loadPage('cursos.html')">Cursos</a>
+
+    </nav>
+    <div class="content">
+        <iframe id="content-frame" src=""></iframe>
+    </div>
+
+    <script>
+        function loadPage(page) {
+            document.getElementById('content-frame').src = page;
+        }
+    </script>
+</body>
+</html>
